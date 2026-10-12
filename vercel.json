@@ -16,12 +16,15 @@
     }],
     "routes": [
         {
+            "handle": "filesystem"
+        },
+        {
             "src": "/static/(.*)",
-            "dest": "/staticfiles/$1"
+            "dest": "/static/$1"
         },
         {
             "src": "/(.*)",
             "dest": "core/wsgi.py"
         }
     ]
-}git add .
+}
