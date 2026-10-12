@@ -4,7 +4,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-clave-para-evaluacion-2026')
 
-# Detecta automáticamente si está en Vercel (DEBUG = False) o en tu PC local (DEBUG = True)
 DEBUG = 'VERCEL' not in os.environ
 
 ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1', 'localhost']
@@ -80,6 +79,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Almacenamiento seguro y directo para evitar fallos de compilación en Vercel
+STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
