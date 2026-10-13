@@ -104,7 +104,8 @@
         <p class="text-muted small mb-0" style="font-family: 'Cinzel', serif; letter-spacing: 0.1em;">Ciudad de las Lágrimas &middot; Control de Acceso</p>
     </footer>
 
-    <audio id="hk-ambient" loop>
+    <!-- AUDIO CORREGIDO A MP3 -->
+    <audio id="hk-ambient" loop autoplay>
         <source src="{% static 'sounds/Hollow Knight OST - Title Theme.mp3' %}" type="audio/mpeg">
     </audio>
 
@@ -120,6 +121,7 @@
             if (savedTime) ambientMusic.currentTime = parseFloat(savedTime);
             if (isPlaying === 'true') ambientMusic.play().catch(() => {});
 
+            // Forzar reproducción al hacer clic en cualquier lugar (burlar autoplay block)
             document.body.addEventListener('click', function() {
                 if (ambientMusic.paused) {
                     ambientMusic.play().catch(() => {});
@@ -132,6 +134,7 @@
                 sessionStorage.setItem('hk_audio_playing', !ambientMusic.paused);
             });
 
+            // Para el sonido de confirmación MP3
             const confirmSound = new Audio("{% static 'sounds/ui_button_confirm.mp3' %}");
             confirmSound.volume = 0.6;
 
@@ -164,7 +167,7 @@
                 nombreError.style.display = hasNumbers ? 'block' : 'none';
             });
 
-            // Auto-formateador opcional de RUT (agrega el guion antes del último dígito si tiene más de 7 dígitos y no lo incluye)
+            // Auto-formateador opcional de RUT
             rutInput.addEventListener('blur', function() {
                 let val = this.value.trim().replace(/[^0-9kK]/g, '');
                 if (val.length > 1 && !this.value.includes('-')) {

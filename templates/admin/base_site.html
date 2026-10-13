@@ -624,12 +624,12 @@
 </div>
 {% endblock %}
 
-<audio id="hk-ambient" loop>
+<!-- AUDIO CORREGIDO A MP3 -->
+<audio id="hk-ambient" loop autoplay>
     <source src="{% static 'sounds/Hollow Knight OST - Title Theme.mp3' %}" type="audio/mpeg">
 </audio>
 
 <audio id="hk-click-sound" preload="auto">
-    <source src="{% static 'sounds/ui_button_confirm.wav' %}" type="audio/wav">
     <source src="{% static 'sounds/ui_button_confirm.mp3' %}" type="audio/mpeg">
 </audio>
 
@@ -652,6 +652,7 @@
             ambientMusic.play().catch(() => {});
         }
 
+        // Burlar el bloqueo de autoplay en el admin también
         document.body.addEventListener('click', function() {
             if (ambientMusic.paused) {
                 ambientMusic.play().catch(() => {});
