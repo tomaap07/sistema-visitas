@@ -624,9 +624,8 @@
 </div>
 {% endblock %}
 
-<!-- AUDIO CORREGIDO A MP3 -->
-<audio id="hk-ambient" loop autoplay>
-    <source src="{% static 'sounds/Hollow Knight OST - Title Theme.mp3' %}" type="audio/mpeg">
+<audio id="hk-ambient" loop>
+    <source src="{% static 'sounds/theme.mp3' %}" type="audio/mpeg">
 </audio>
 
 <audio id="hk-click-sound" preload="auto">
@@ -644,33 +643,61 @@
         const savedTime = sessionStorage.getItem('hk_audio_time');
         const isPlaying = sessionStorage.getItem('hk_audio_playing');
 
-        if (savedTime) {
-            ambientMusic.currentTime = parseFloat(savedTime);
-        }
-
-        if (isPlaying === 'true') {
-            ambientMusic.play().catch(() => {});
-        }
-
-        // Burlar el bloqueo de autoplay en el admin también
-        document.body.addEventListener('click', function() {
+        if (savedTime) ambientMusic.currentTime = parseFloat(savedTime);
+        
+        const startAudio = () => {
             if (ambientMusic.paused) {
                 ambientMusic.play().catch(() => {});
                 sessionStorage.setItem('hk_audio_playing', 'true');
             }
-        }, { once: true });
+            window.removeEventListener('mousedown', startAudio);
+            window.removeEventListener('keydown', startAudio);
+        };
+
+        if (isPlaying === 'true') {
+            ambientMusic.play().catch(() => {
+                window.addEventListener('mousedown', startAudio);
+                window.addEventListener('keydown', startAudio);
+            });
+        } else {
+            window.addEventListener('mousedown', startAudio);
+            window.addEventListener('keydown', startAudio);
+        }
 
         window.addEventListener('beforeunload', function() {
             sessionStorage.setItem('hk_audio_time', ambientMusic.currentTime);
             sessionStorage.setItem('hk_audio_playing', !ambientMusic.paused);
         });
 
-        document.addEventListener('mousedown', function(e) {
-            const target = e.target.closest('a, button, input[type="submit"], input[type="button"], .addlink, .changelink, .deletelink');
-            if (target) {
+        const allAdminButtons = document.querySelectorAll('a, button, input[type="submit"], input[type="button"], .addlink, .changelink, .deletelink');
+        
+        allAdminButtons.forEach(btn => {
+            btn.addEventListener('click', function(e) {
                 confirmSound.currentTime = 0;
                 confirmSound.play().catch(() => {});
-            }
+
+                const href = this.getAttribute('href');
+                const target = this.getAttribute('target');
+                
+                if (href && href !== '#' && !href.startsWith('javascript') && target !== '_blank' && !this.closest('form')) {
+                    e.preventDefault();
+                    setTimeout(() => { window.location.href = href; }, 400);
+                } 
+                else if (this.closest('form') && this.type === 'submit') {
+                    e.preventDefault();
+                    const form = this.closest('form');
+                    
+                    if (this.name) {
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.name = this.name;
+                        hiddenInput.value = this.value;
+                        form.appendChild(hiddenInput);
+                    }
+                    
+                    setTimeout(() => { form.submit(); }, 400);
+                }
+            });
         });
     });
 </script>
