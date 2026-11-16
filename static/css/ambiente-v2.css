@@ -13,7 +13,7 @@ body.ha-admin .ha-atmosphere{background:radial-gradient(ellipse at 72% 15%,#3057
 .ha-rain--far{opacity:.12;animation-duration:2.8s;background-size:260px 180px}.ha-rain--near{filter:blur(.35px)}
 .ha-drip{position:absolute;left:12%;top:3%;width:2px;height:7px;border-radius:50%;background:#ccecf4;opacity:0;animation:ha-drip 7s ease-in infinite}.ha-splash{position:absolute;right:8%;bottom:4%;width:24px;height:7px;border:1px solid #b6e5ee;border-radius:50%;opacity:0;animation:ha-splash 6s ease-out infinite}
 @keyframes ha-drip{0%,75%{opacity:0;transform:translateY(0)}76%{opacity:.35}88%,100%{opacity:0;transform:translateY(80vh)}}@keyframes ha-splash{0%,80%{opacity:0;transform:scale(.2)}82%{opacity:.3}92%,100%{opacity:0;transform:scale(1.3)}}
-@keyframes ha-rain{to{background-position:0 180px}}@keyframes ha-mist{to{transform:translate3d(3%,2%,0)}}@keyframes ha-dust{to{transform:translate3d(0,-35px,0)}}
+@keyframes ha-rain{from{transform:rotate(10deg) translate3d(0,-180px,0)}to{transform:rotate(10deg) translate3d(0,0,0)}}@keyframes ha-mist{to{transform:translate3d(3%,2%,0)}}@keyframes ha-dust{to{transform:translate3d(0,-35px,0)}}
 .ha-paused *{animation-play-state:paused!important}
 html[data-rain="off"] .ha-rain,html[data-rain="off"] .ha-drip,html[data-rain="off"] .ha-splash{display:none}html[data-rain="reduced"] .ha-rain--near{display:none}
 html[data-effects="reduced"] .ha-dust,html[data-effects="reduced"] .ha-cave--near{display:none}html[data-effects="reduced"] .ha-cave{transform:none}html[data-effects="reduced"] .ha-fog{animation:none}
@@ -26,3 +26,38 @@ html[data-effects="reduced"] .ha-dust,html[data-effects="reduced"] .ha-cave--nea
 .ha-player button:not(.ha-player__toggle){min-width:38px;min-height:34px;border:1px solid #597280;background:#1b303e;color:#edf6f7;cursor:pointer}.ha-player button:hover{background:#304c5b}.ha-player button:disabled{opacity:.4;cursor:not-allowed}.ha-player button:focus-visible,.ha-player select:focus-visible,.ha-player input:focus-visible{outline:2px solid #d2eff6;outline-offset:2px}
 .ha-player__volume{display:grid;grid-template-columns:auto 1fr;gap:9px;align-items:center;color:#c7d7dc}.ha-player input[type=range]{width:100%;accent-color:#c07a82}.ha-player details{margin-top:12px;border-top:1px solid #415660;padding-top:9px}.ha-player summary{cursor:pointer;color:#d9e6e9}.ha-player__settings{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px;margin-top:10px;color:#c6d4d9}.ha-player select{max-width:125px;background:#192d39;color:#edf6f7;border:1px solid #5f7782;padding:5px}.ha-player__pending{margin:10px 0 0;font-size:10px;color:#b4c3c9;line-height:1.5}
 @media(max-width:600px){.ha-player{right:10px;bottom:10px;width:min(290px,calc(100vw - 20px))}.ha-player__panel{max-height:min(60vh,420px);overflow:auto}}
+
+/* Escenarios originales, alojados localmente; la capa oscura conserva contraste. */
+.ha-game-bg{position:absolute;inset:-6%;background:center/cover no-repeat url('../recursos-hollow/escenarios/pharloom.webp');transform:translate3d(var(--pointer-x,0px),calc(var(--scroll-far,0px) + var(--pointer-y,0px)),0);transition:transform .7s ease-out;animation:ha-scene-breathe 24s ease-in-out infinite alternate}
+body.ha-admin .ha-game-bg{background-image:url('../recursos-hollow/escenarios/hallownest.webp')}
+.ha-game-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0710188c,#0b111b85 52%,#090e1670)}
+.ha-cave--far{opacity:.08}.ha-cave--mid{opacity:.1}.ha-cave--near{opacity:.16}
+.ha-hornet{position:relative;z-index:3;width:210px;height:250px;object-fit:contain;filter:drop-shadow(0 8px 30px #000b)}
+.ha-admin-knight{position:fixed;right:28px;bottom:75px;width:clamp(85px,11vw,165px);max-height:27vh;object-fit:contain;opacity:.53;pointer-events:none;z-index:0;filter:drop-shadow(0 6px 24px #000)}
+.ha-clicked{filter:brightness(1.28);transition:filter .12s}
+.ha-knight-hero{width:150px;height:205px;object-fit:contain;filter:drop-shadow(0 7px 22px #a6dbf233);animation:ha-character-breathe 5s ease-in-out infinite alternate}
+.dashboard .ha-admin-knight{display:none}
+.ha-admin-hero__mark{display:flex;flex-direction:column;align-items:center;gap:8px}
+.ha-brand-hornet{object-fit:contain;flex-shrink:0}
+.ha-companion{background:none!important;display:flex;align-items:center;justify-content:flex-start;overflow:visible}
+.ha-companion img{width:160px;height:215px;object-fit:contain}
+.ha-api-companion{float:right;margin:10px 0 20px 24px;width:130px;height:150px;pointer-events:none}
+.ha-api-companion img{width:100%;height:100%;object-fit:contain}
+.ha-cloth{width:80px;height:65px;object-fit:contain;margin-left:auto}
+.ha-reactive{pointer-events:none;translate:var(--look-x,0px) var(--look-y,0px);rotate:var(--look-turn,0deg);transition:translate .65s ease-out,rotate .65s ease-out}
+html[data-effects="reduced"] .ha-reactive{translate:none;rotate:none;animation:none}
+@media(prefers-reduced-motion:reduce){.ha-reactive{translate:none!important;rotate:none!important;animation:none!important}}
+@media(max-width:600px){.ha-api-companion{width:72px;height:90px;margin-left:10px}.ha-cloth{width:55px;height:55px}}
+@media(hover:hover) and (pointer:fine){
+ body{cursor:url('../recursos-hollow/cursor.png') 4 2,auto}
+ body :is(a,button,select,summary,input[type="button"],input[type="submit"],input[type="checkbox"],input[type="range"]){cursor:url('../recursos-hollow/cursor.png') 4 2,pointer!important}
+ body :is(input:not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="range"]),textarea,[contenteditable="true"]){cursor:text!important}
+ body :disabled{cursor:not-allowed!important}
+}
+.form-intro .ornament,.detail-heading .ornament{font-size:0;width:170px;height:215px;background:center/contain no-repeat url('../recursos-hollow/personajes/hornet/hornet_idle_1.png');opacity:.9}
+@keyframes ha-scene-breathe{from{scale:1}to{scale:1.04}}
+@keyframes ha-character-breathe{to{transform:translateY(-5px)}}
+html[data-effects="reduced"] .ha-game-bg,html[data-effects="reduced"] .ha-knight-hero{animation:none;transform:none;transition:none}
+@media(prefers-reduced-motion:reduce){.ha-knight-hero{animation:none}}
+@media(max-width:700px){.ha-admin-knight{width:75px;opacity:.32}.ha-hornet{width:170px;height:205px}}
+@media(prefers-reduced-motion:reduce){.ha-game-bg{transform:none}}

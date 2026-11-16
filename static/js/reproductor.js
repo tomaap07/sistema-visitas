@@ -133,7 +133,7 @@
     control.addEventListener('change', () => dispatchEvent(new CustomEvent('ha:setting', {detail:{key,value:control.value}})));
   }
 
-  // Synthesised interface and rain sounds: no game audio assets required.
+  // Rain ambience is synthesized; interface audio uses the local game sample.
   let context, rainGain;
   const audioContext = () => {
     if (!context) {
@@ -165,16 +165,36 @@
   controls.rainAudio.addEventListener('change', () => { rainSound = controls.rainAudio.checked; set(localStorage,'ha_rain_sound',rainSound); if (rainSound) initRain(); else applyRain(); });
   controls.clickAudio.addEventListener('change', () => { clickSound = controls.clickAudio.checked; set(localStorage,'ha_click_sound',clickSound); });
   document.addEventListener('visibilitychange', applyRain);
+  const clickAudio = new Audio(source.dataset.click || '');
+  clickAudio.preload = 'auto';
+  clickAudio.volume = .65;
   const ping = () => {
-    if (!clickSound) return;
-    const ctx = audioContext();
-    if (!ctx) return;
-    const tone = ctx.createOscillator(), gain = ctx.createGain();
-    tone.type = 'sine'; tone.frequency.setValueAtTime(660, ctx.currentTime);
-    tone.frequency.exponentialRampToValueAtTime(420, ctx.currentTime + .09);
-    gain.gain.setValueAtTime(.035, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(.0001, ctx.currentTime + .12);
-    tone.connect(gain).connect(ctx.destination); tone.start(); tone.stop(ctx.currentTime + .12);
+    if (!clickSound || !source.dataset.click) return null;
+    try {
+      clickAudio.currentTime = 0;
+      const playing = clickAudio.play();
+      if (playing) playing.catch(() => {});
+      return playing;
+    } catch (_) { return null; }
+  };
+  let navigationPending = false;
+  const afterClick = (playing, action, target) => {
+    if (!playing) { action(); return; }
+    navigationPending = true;
+    target?.classList.add('ha-clicked');
+    let finished = false, timeout;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      clearTimeout(timeout);
+      clickAudio.removeEventListener('ended', finish);
+      target?.classList.remove('ha-clicked');
+      navigationPending = false;
+      action();
+    };
+    clickAudio.addEventListener('ended', finish, {once:true});
+    playing.catch(finish);
+    timeout = setTimeout(finish, 1600);
   };
   const activate = event => {
     if (panel.contains(event.target)) return;
@@ -185,7 +205,9 @@
   document.addEventListener('click', event => {
     const target = event.target.closest('a, button, input[type="button"], input[type="submit"]');
     if (!target || event.defaultPrevented || event.button !== 0) return;
-    ping();
+    if (navigationPending) { event.preventDefault(); return; }
+    if (target.form && target.type === 'submit') return;
+    const playing = ping();
     const link = target.closest('a[href]');
     if (!link || panel.contains(link) || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey ||
         link.hasAttribute('download') || link.target && link.target !== '_self' ||
@@ -195,7 +217,23 @@
         link.origin !== location.origin) return;
     event.preventDefault();
     const destination = link.href;
-    setTimeout(() => { location.href = destination; }, 100);
+    afterClick(playing, () => { location.href = destination; }, target);
+  });
+  let resubmitting = false;
+  document.addEventListener('submit', event => {
+    if (resubmitting) return;
+    if (navigationPending) { event.preventDefault(); return; }
+    const playing = ping();
+    // AJAX handlers retain their own flow. Native forms wait for the sample,
+    // then preserve HTML validation and the clicked submitter's name/value.
+    if (event.defaultPrevented || !playing) return;
+    event.preventDefault();
+    const form = event.target, submitter = event.submitter;
+    afterClick(playing, () => {
+      resubmitting = true;
+      try { form.requestSubmit(submitter || undefined); }
+      finally { resubmitting = false; }
+    }, submitter);
   });
   render();
   // A full page navigation may reset autoplay permission. Resume when the

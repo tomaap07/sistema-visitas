@@ -7,7 +7,7 @@
   const scene = document.createElement('div');
   scene.className = 'ha-atmosphere';
   scene.setAttribute('aria-hidden', 'true');
-  scene.innerHTML = '<div class="ha-cave ha-cave--far"></div><div class="ha-cave ha-cave--mid"></div><div class="ha-cave ha-cave--near"></div><div class="ha-fog"></div><div class="ha-dust"></div><div class="ha-rain ha-rain--far"></div><div class="ha-rain ha-rain--near"></div><div class="ha-drip"></div><div class="ha-splash"></div>';
+  scene.innerHTML = '<div class="ha-game-bg"></div><div class="ha-cave ha-cave--far"></div><div class="ha-cave ha-cave--mid"></div><div class="ha-cave ha-cave--near"></div><div class="ha-fog"></div><div class="ha-dust"></div><div class="ha-rain ha-rain--far"></div><div class="ha-rain ha-rain--near"></div><div class="ha-drip"></div><div class="ha-splash"></div>';
   document.body.prepend(scene);
   if (document.querySelector('#branding')) document.body.classList.add('ha-admin');
 
@@ -37,5 +37,18 @@
     });
   };
   addEventListener('scroll', scroll, {passive:true});
+  let pointerFrame = false, pointerX = 0, pointerY = 0;
+  addEventListener('pointermove', event => {
+    if (event.pointerType !== 'mouse' || reducedMotion.matches || root.dataset.effects === 'reduced') return;
+    pointerX = (event.clientX / innerWidth - .5) * 18;
+    pointerY = (event.clientY / innerHeight - .5) * 12;
+    if (pointerFrame) return;
+    pointerFrame = true;
+    requestAnimationFrame(() => {
+      scene.style.setProperty('--pointer-x', pointerX + 'px');
+      scene.style.setProperty('--pointer-y', pointerY + 'px');
+      pointerFrame = false;
+    });
+  }, {passive:true});
   addEventListener('storage', apply);
 })();

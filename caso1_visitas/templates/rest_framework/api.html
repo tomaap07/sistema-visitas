@@ -8,6 +8,6 @@
 {% block branding %}<a class="navbar-brand" href="{% url 'api_home' %}">✧ &nbsp; Hallow Agenda · API</a>{% endblock %}
 {% block script %}
   {{ block.super }}
-  <script defer src="{% static 'js/escenario.js' %}"></script>
-  <script defer src="{% static 'js/reproductor.js' %}" data-music="{% static 'sounds/ambiente-hallownest.mp3' %}"></script>
+  <script defer src="{% static 'js/escenario.js' %}"></script><script defer src="{% static 'js/companeros.js' %}" data-assets="{% static 'recursos-hollow/personajes/' %}"></script>
+  <script defer src="{% static 'js/reproductor.js' %}" data-click="{% static 'recursos-hollow/audio/confirmar.mp3' %}" data-music="{% static 'sounds/ambiente-hallownest.mp3' %}"></script>
 {% endblock %}

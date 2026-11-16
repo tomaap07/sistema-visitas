@@ -10,13 +10,14 @@
   <link rel="stylesheet" href="{% static 'css/api.css' %}">
   <link rel="stylesheet" href="{% static 'css/ambiente-v2.css' %}">
   <link rel="stylesheet" href="{% static 'css/visitas-v2.css' %}">
-  <script defer src="{% static 'js/escenario.js' %}"></script>
-  <script defer src="{% static 'js/reproductor.js' %}" data-music="{% static 'sounds/ambiente-hallownest.mp3' %}"></script>
+  <script defer src="{% static 'js/escenario.js' %}"></script><script defer src="{% static 'js/companeros.js' %}" data-assets="{% static 'recursos-hollow/personajes/' %}"></script>
+  <script defer src="{% static 'js/hornet.js' %}"></script>
+  <script defer src="{% static 'js/reproductor.js' %}" data-click="{% static 'recursos-hollow/audio/confirmar.mp3' %}" data-music="{% static 'sounds/ambiente-hallownest.mp3' %}"></script>
 </head>
 <body>
   <a class="ha-skip" href="#contenido">Saltar al contenido</a>
   <header class="header"><div class="shell header-inner">
-    <a class="brand" href="{% url 'visita_list' %}" aria-label="Hallow Agenda, inicio"><span class="brand-mark">✧</span><span><span class="brand-name">Hallow Agenda</span><small>LIBRO DE VISITAS</small></span></a>
+    <a class="brand" href="{% url 'visita_list' %}" aria-label="Hallow Agenda, inicio"><img class="ha-brand-hornet" src="{% static 'recursos-hollow/personajes/hornet/hornet_idle_1.png' %}" alt="" width="40" height="48"><span><span class="brand-name">Hallow Agenda</span><small>LIBRO DE VISITAS</small></span></a>
     <nav aria-label="Navegación principal"><a href="{% url 'visita_list' %}">El registro</a><a href="{% url 'api_home' %}">API</a><a href="/admin/">Administración</a><a class="button button-small" href="{% url 'visita_create' %}">Registrar visita <span>↗</span></a></nav>
   </div></header>
   <main class="shell main" id="contenido" tabindex="-1">
