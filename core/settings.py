@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
+from django.core.exceptions import ImproperlyConfigured
 
 import os
 from dotenv import load_dotenv
@@ -33,6 +35,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY', 'local-development-only-change-me')
+if os.getenv('VERCEL') and SECRET_KEY == 'local-development-only-change-me':
+    raise ImproperlyConfigured('Configura SECRET_KEY en el entorno del despliegue.')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'false' if os.getenv('VERCEL') else 'true').lower() == 'true'
@@ -45,6 +49,9 @@ ALLOWED_HOSTS = [
 
 if os.getenv('VERCEL'):
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
 
 
 # Application definition
@@ -83,7 +90,18 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',    )
 }
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [origin.strip() for origin in os.getenv(
+    'CORS_ALLOWED_ORIGINS',
+    'https://sistema-visitas-kohl.vercel.app,http://localhost:5500,http://127.0.0.1:5500'
+).split(',') if origin.strip()]
+CORS_URLS_REGEX = r'^/api/.*$'
+CORS_ALLOW_CREDENTIALS = False
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
+    'REFRESH_TOKEN_LIFETIME': timedelta(hours=8),
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}
 
 ROOT_URLCONF = 'core.urls'
 

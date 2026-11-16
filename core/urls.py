@@ -19,17 +19,19 @@ from django.urls import include, path
 from django.views.generic import RedirectView
 
 from caso1_visitas.api import router
-from caso1_visitas.api_views import api_auth, api_home, token_obtain, token_refresh
+from caso1_visitas.api_views import api_auth, api_home, token_obtain, token_refresh, current_user
 
 
 urlpatterns = [
     path('', RedirectView.as_view(pattern_name='visita_list', permanent=False)),
     path('admin/', admin.site.urls),
+    path('cliente/', RedirectView.as_view(url='/static/cliente/index.html', permanent=False), name='cliente_web'),
     path('', include('caso1_visitas.urls')),
     path("api/auth/", api_auth, name="api_auth"),
     path("api/auth/", include("rest_framework.urls")),
 
     path("api/", api_home, name="api_home"),
+    path("api/me/", current_user, name="api_current_user"),
     path("api/", include(router.urls)), 
 
     path("api/token/", token_obtain, name="token_obtain_pair"),

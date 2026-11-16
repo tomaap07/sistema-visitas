@@ -3,6 +3,7 @@
 {% block content %}
 <section class="api-page"><p class="eyebrow">✦ &nbsp; CENTRO DE INTEGRACIÓN</p><h1>Una puerta hacia<br><em>el registro.</em></h1><p class="intro">Consulta y administra recursos mediante la API REST. Los recursos requieren un token JWT válido.</p>
 <div class="api-grid">
+  <a class="panel api-card" href="{% url 'cliente_web' %}"><p class="eyebrow">CLIENTE WEB</p><h2>Gestionar el registro</h2><p>Inicia sesión para consultar, crear, editar y eliminar personas y visitas.</p></a>
   <a class="panel api-card" href="{% url 'token_obtain_pair' %}"><p class="eyebrow">POST &nbsp; /api/token/</p><h2>Obtener token</h2><p>Solicita un par de tokens con una cuenta autorizada.</p></a>
   <a class="panel api-card" href="{% url 'token_refresh' %}"><p class="eyebrow">POST &nbsp; /api/token/refresh/</p><h2>Actualizar token</h2><p>Renueva el token de acceso con un refresh token vigente.</p></a>
   <div class="panel api-card"><p class="eyebrow">GET · POST &nbsp; /api/visitas/</p><h2>Visitas</h2><p>Recursos de visitas, entradas, salidas y su relación con personas.</p><a class="detail-link" href="/api/visitas/">Abrir recurso ↗</a></div>

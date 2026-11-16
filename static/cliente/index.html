@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Cliente de recepción · Hallow Agenda</title>
+  <link rel="stylesheet" href="bootstrap.min.css"><link rel="stylesheet" href="cliente.css">
+  <script defer src="config.js"></script><script defer src="app.js"></script>
+</head>
+<body>
+<header class="border-bottom"><div class="container py-3 d-flex justify-content-between align-items-center gap-3 flex-wrap">
+  <a class="brand" href="/visitas/" data-site-link>HALLOW AGENDA <small>Cliente de recepción</small></a>
+  <div><span id="identity" class="me-3"></span><button id="logout" class="btn btn-outline-light btn-sm" hidden>Cerrar sesión</button></div>
+</div></header>
+<main class="container py-4">
+  <div id="notice" role="status" aria-live="polite" class="alert" hidden></div>
+  <section id="login-panel" class="card login-card mx-auto p-4">
+    <p class="eyebrow">RECEPCIÓN · ACCESO AUTORIZADO</p><h1 class="h3">Tu registro, en un solo lugar</h1>
+    <p>Ingresa con tu cuenta del sistema para consultar y administrar personas y visitas.</p>
+    <form id="login-form"><label for="username" class="form-label">Usuario</label><input id="username" class="form-control mb-3" required autocomplete="username">
+    <label for="password" class="form-label">Contraseña</label><input id="password" type="password" class="form-control mb-4" required autocomplete="current-password">
+    <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button></form>
+  </section>
+  <section id="workspace" hidden>
+    <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap mb-4"><div><p class="eyebrow mb-1">LIBRO DE RECEPCIÓN</p><h1 class="h2">Personas y visitas</h1></div><button id="refresh" class="btn btn-outline-light">Actualizar registro</button></div>
+    <div class="d-flex flex-wrap gap-2 mb-3" role="group" aria-label="Recurso"><button class="btn btn-primary" data-resource="personas" aria-pressed="true">Personas</button><button class="btn btn-outline-light" data-resource="visitas" aria-pressed="false">Visitas</button></div>
+    <div class="d-flex flex-wrap justify-content-between gap-3 mb-3"><label class="search-label">Buscar en el registro<input id="search" class="form-control" type="search" placeholder="Nombre, RUT o motivo"></label><button id="create" class="btn btn-primary align-self-end">Añadir persona</button></div>
+    <div id="loader" class="card p-4" role="status" hidden><span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Consultando el registro…</div>
+    <div id="table-region" class="table-responsive card" tabindex="0" aria-label="Registro; desplaza para ver todas las columnas"><table class="table table-dark table-hover mb-0"><thead id="table-head"></thead><tbody id="table-body"></tbody></table></div>
+    <p id="count" class="small mt-3"></p>
+  </section>
+  <dialog id="editor" aria-labelledby="editor-title">
+    <form id="record-form"><h2 id="editor-title" class="h4"></h2><div id="form-error" class="alert alert-danger" role="alert" hidden></div><div id="fields"></div><div class="d-flex gap-2 justify-content-end mt-4"><button id="cancel" type="button" class="btn btn-outline-light">Cancelar</button><button id="save" type="submit" class="btn btn-primary">Guardar</button></div></form>
+  </dialog>
+  <dialog id="delete-dialog" aria-labelledby="delete-title"><h2 id="delete-title" class="h4">Eliminar registro</h2><p id="delete-description"></p><p>Esta operación no se puede deshacer.</p><div class="d-flex gap-2 justify-content-end"><button id="delete-cancel" class="btn btn-outline-light">Cancelar</button><button id="delete-confirm" class="btn btn-danger">Eliminar</button></div></dialog>
+</main>
+<footer class="container py-4 small">Hallow Agenda · Registro de recepción</footer>
+</body></html>

@@ -1,7 +1,7 @@
 import logging
 
 from django.db import DatabaseError
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
 from django.utils.deprecation import MiddlewareMixin
 
@@ -14,7 +14,10 @@ class DatabaseUnavailableMiddleware(MiddlewareMixin):
     def process_exception(self, request, exception):
         if isinstance(exception, DatabaseError):
             logger.exception('Error de base de datos durante la solicitud', exc_info=exception)
-            content = render_to_string('visita/base_no_disponible.html')
-            response = HttpResponse(content, status=503)
+            if request.path.startswith('/api/'):
+                response = JsonResponse({'detail': 'La base de datos no está disponible temporalmente. Actualiza el registro antes de repetir una operación.'}, status=503)
+            else:
+                content = render_to_string('visita/base_no_disponible.html')
+                response = HttpResponse(content, status=503)
             response['Retry-After'] = '30'
             return response
