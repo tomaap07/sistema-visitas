@@ -157,12 +157,23 @@
 {% endblock %}
 
 {% block branding %}
-<h1 id="site-name"><a href="{% url 'admin:index' %}">Recepción <span style="color:#cf8488">& visitas</span></a></h1>
+<div class="ha-brand"><span aria-hidden="true">✧</span><div><a href="{% url 'admin:index' %}">HALLOW AGENDA</a><small>ADMINISTRACIÓN · RECEPCIÓN</small></div></div>
 {% endblock %}
 
-{% block nav-global %}{% endblock %}
+{% block nav-global %}
+{% if has_permission %}<nav class="ha-admin-nav" aria-label="Navegación del panel">
+  <a href="{% url 'admin:index' %}">Panel</a>
+  {% if perms.caso1_visitas.view_visita or perms.caso1_visitas.change_visita %}<a href="{% url 'admin:caso1_visitas_visita_changelist' %}">Visitas</a>{% endif %}
+  {% if perms.caso1_visitas.view_persona or perms.caso1_visitas.change_persona %}<a href="{% url 'admin:caso1_visitas_persona_changelist' %}">Personas</a>{% endif %}
+  {% if perms.auth.view_user or perms.auth.change_user %}<a href="{% url 'admin:auth_user_changelist' %}">Usuarios</a>{% endif %}
+  {% if perms.auth.view_group or perms.auth.change_group %}<a href="{% url 'admin:auth_group_changelist' %}">Grupos</a>{% endif %}
+  <a href="{% url 'visita_list' %}">Ver sitio ↗</a>
+</nav>{% endif %}
+{% endblock %}
 
 {% block extrahead %}{{ block.super }}
-<link rel="stylesheet" href="{% static 'css/hallownest.css' %}">
-<script defer src="{% static 'js/hallownest.js' %}" data-music="{% static 'sounds/ambiente-hallownest.mp3' %}" data-click="{% static 'sounds/confirmar-hallownest.mp3' %}"></script>
+<link rel="stylesheet" href="{% static 'css/ambiente-v2.css' %}">
+<link rel="stylesheet" href="{% static 'css/admin-v2.css' %}?v=4">
+<script defer src="{% static 'js/escenario.js' %}"></script>
+<script defer src="{% static 'js/reproductor.js' %}" data-music="{% static 'sounds/ambiente-hallownest.mp3' %}"></script>
 {% endblock %}

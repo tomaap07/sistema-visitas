@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.urls import reverse
 from django.db import OperationalError
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Permission
 from unittest.mock import patch
 
 from .models import Persona, Visita
@@ -78,5 +79,78 @@ class ConexionBaseDeDatosTests(TestCase):
             with self.subTest(url=url):
                 response = self.client.get(url, HTTP_ACCEPT='text/html')
                 self.assertIn(response.status_code, (200, 401))
-                self.assertContains(response, 'js/hallownest.js', status_code=response.status_code)
+                self.assertContains(response, 'js/reproductor.js', status_code=response.status_code)
+                self.assertContains(response, 'js/escenario.js', status_code=response.status_code)
                 self.assertContains(response, 'ambiente-hallownest.mp3', status_code=response.status_code)
+
+    def test_dashboard_shows_real_counts(self):
+        user = get_user_model().objects.create_superuser(username='gestor', password='ClaveLargaSegura123!')
+        person = Persona.objects.create(rut='12345678-5', nombre='Ana', apellido='Perez')
+        Visita.objects.create(persona=person, motivo_visita='Reunion', fecha=timezone.localdate(), hora_entrada=timezone.now())
+        self.client.force_login(user)
+        response = self.client.get('/admin/')
+        summary = response.context['resumen_admin']
+        self.assertEqual(summary['visitas']['total'], 1)
+        self.assertEqual(summary['visitas']['hoy'], 1)
+        self.assertEqual(summary['visitas']['activas'], 1)
+        self.assertEqual(summary['visitas']['finalizadas'], 0)
+        self.assertEqual(summary['personas'], 1)
+        self.assertContains(response, 'Ana Perez')
+
+    def test_dashboard_does_not_expose_stats_without_permissions(self):
+        user = get_user_model().objects.create_user(username='limitado', password='ClaveLargaSegura123!', is_staff=True)
+        self.client.force_login(user)
+        response = self.client.get('/admin/')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['resumen_admin'], {})
+        self.assertNotContains(response, 'Visitas recientes')
+
+    def test_dashboard_limits_summary_to_authorized_model(self):
+        user = get_user_model().objects.create_user(username='personas', password='ClaveLargaSegura123!', is_staff=True)
+        user.user_permissions.add(Permission.objects.get(content_type__app_label='caso1_visitas', codename='view_persona'))
+        Persona.objects.create(rut='12345678-5', nombre='Ana', apellido='Perez')
+        self.client.force_login(user)
+        response = self.client.get('/admin/')
+        self.assertEqual(response.context['resumen_admin']['personas'], 1)
+        self.assertNotIn('visitas', response.context['resumen_admin'])
+        self.assertNotContains(response, 'Visitas recientes')
+
+    def test_admin_action_and_jwt_access(self):
+        user = get_user_model().objects.create_superuser(username='gestor', password='ClaveLargaSegura123!')
+        person = Persona.objects.create(rut='12345678-5', nombre='Ana', apellido='Perez')
+        visit = Visita.objects.create(persona=person, motivo_visita='Reunion', fecha=timezone.localdate(), hora_entrada=timezone.now())
+        self.client.force_login(user)
+        response = self.client.post('/admin/caso1_visitas/visita/', {'action':'marcar_salida', '_selected_action':[str(visit.pk)]})
+        self.assertEqual(response.status_code, 302)
+        visit.refresh_from_db()
+        self.assertIsNotNone(visit.hora_salida)
+        token_response = self.client.post('/api/token/', data={'username':'gestor','password':'ClaveLargaSegura123!'}, content_type='application/json')
+        self.assertEqual(token_response.status_code, 200)
+        token = token_response.json()['access']
+        response = self.client.get('/api/visitas/', HTTP_AUTHORIZATION='Bearer ' + token)
+        self.assertEqual(response.status_code, 200)
+
+    def test_login_password_change_and_logout(self):
+        user = get_user_model().objects.create_superuser(username='adminlocal', password='ClaveInicialSegura123!')
+        self.assertTrue(self.client.login(username='adminlocal', password='ClaveInicialSegura123!'))
+        self.assertEqual(self.client.get('/admin/password_change/').status_code, 200)
+        response = self.client.post('/admin/password_change/', {
+            'old_password':'ClaveInicialSegura123!',
+            'new_password1':'OtraClaveSegura456!',
+            'new_password2':'OtraClaveSegura456!',
+        })
+        self.assertEqual(response.status_code, 302)
+        user.refresh_from_db()
+        self.assertTrue(user.check_password('OtraClaveSegura456!'))
+        self.assertEqual(self.client.post('/admin/logout/').status_code, 200)
+        self.assertEqual(self.client.get('/admin/').status_code, 302)
+
+    def test_rut_validation_and_public_edit_restriction(self):
+        response = self.client.post(reverse('visita_create'), {
+            'nombre':'Ana', 'apellido':'Perez', 'rut':'12345678-0',
+            'motivo_visita':'Reunion', 'fecha':'2026-11-16', 'hora_entrada':'2026-11-16T12:00',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'dígito verificador')
+        self.assertFalse(Visita.objects.exists())
+        self.assertEqual(self.client.get('/visitas/1/editar/').status_code, 403)

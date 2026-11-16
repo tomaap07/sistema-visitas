@@ -1,11 +1,13 @@
 {% extends "visita/base.html" %}
 {% block title %}API · Hallow Agenda{% endblock %}
 {% block content %}
-<section class="api-page"><p class="eyebrow">✦ &nbsp; CENTRO DE INTEGRACIÓN</p><h1>API de <em>recepción.</em></h1><p class="intro">Accede a la autenticación, los tokens y los recursos de visitas.</p>
+<section class="api-page"><p class="eyebrow">✦ &nbsp; CENTRO DE INTEGRACIÓN</p><h1>Una puerta hacia<br><em>el registro.</em></h1><p class="intro">Consulta y administra recursos mediante la API REST. Los recursos requieren un token JWT válido.</p>
 <div class="api-grid">
-<a class="panel api-card" href="{% url 'api_auth' %}"><p class="eyebrow">/api/auth/</p><h2>Autenticación</h2><p>Inicia o cierra la sesión web de Django REST Framework.</p></a>
-<a class="panel api-card" href="{% url 'token_obtain_pair' %}"><p class="eyebrow">/api/token/</p><h2>Obtener token</h2><p>Genera un par de tokens JWT con tus credenciales.</p></a>
-<a class="panel api-card" href="{% url 'token_refresh' %}"><p class="eyebrow">/api/token/refresh/</p><h2>Actualizar token</h2><p>Renueva el token de acceso con un refresh token vigente.</p></a>
-<div class="panel api-card"><p class="eyebrow">/api/</p><h2>Recursos</h2><p>/api/visitas/<br>/api/personas/</p></div>
-</div></section>
+  <a class="panel api-card" href="{% url 'token_obtain_pair' %}"><p class="eyebrow">POST &nbsp; /api/token/</p><h2>Obtener token</h2><p>Solicita un par de tokens con una cuenta autorizada.</p></a>
+  <a class="panel api-card" href="{% url 'token_refresh' %}"><p class="eyebrow">POST &nbsp; /api/token/refresh/</p><h2>Actualizar token</h2><p>Renueva el token de acceso con un refresh token vigente.</p></a>
+  <div class="panel api-card"><p class="eyebrow">GET · POST &nbsp; /api/visitas/</p><h2>Visitas</h2><p>Recursos de visitas, entradas, salidas y su relación con personas.</p><a class="detail-link" href="/api/visitas/">Abrir recurso ↗</a></div>
+  <div class="panel api-card"><p class="eyebrow">GET · POST &nbsp; /api/personas/</p><h2>Personas</h2><p>Recursos de personas identificadas por su RUT.</p><a class="detail-link" href="/api/personas/">Abrir recurso ↗</a></div>
+</div>
+<section class="api-auth-note"><p class="eyebrow">AUTENTICACIÓN</p><h2>Acceso protegido</h2><p>Envía el token de acceso en la cabecera <code>Authorization: Bearer &lt;token&gt;</code>. Los detalles de cada recurso también admiten las operaciones habilitadas por el servidor.</p><a class="back-link" href="{% url 'api_auth' %}">Opciones de sesión web →</a></section>
+</section>
 {% endblock %}

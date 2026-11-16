@@ -1,0 +1,63 @@
+/* Admin identity layered over Django's own form and permission-aware templates. */
+:root {
+  --primary:#547b92; --secondary:#152735; --accent:#dbeaf0; --primary-fg:#f3f8fa;
+  --body-fg:#e7eef1; --body-bg:#09121a; --darkened-bg:#14232f; --selected-bg:#263f50;
+  --hairline-color:#344b59; --border-color:#3b5260; --link-fg:#b4d2e0; --link-hover-color:#fff;
+  --link-selected-fg:#ecb1b4; --body-quiet-color:#b6c6cc; --body-loud-color:#f0f6f7;
+  --button-bg:#426478; --button-hover-bg:#557c92; --default-button-bg:#a64650;
+  --default-button-hover-bg:#c05c64; --delete-button-bg:#91444b; --delete-button-hover-bg:#b15159;
+}
+body{background:radial-gradient(ellipse at 72% 5%,#1b3544 0,transparent 48%),linear-gradient(155deg,#0b1822,#070d14 75%)!important;color:#e7eef1;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+body #container{background:transparent;min-height:100vh}
+body #header{display:flex;flex-wrap:wrap;align-items:center;gap:16px 35px;padding:20px max(24px,calc((100% - 1450px)/2));background:rgba(6,14,21,.88);border-bottom:1px solid #4c6671;box-shadow:0 10px 40px #0006}
+.ha-brand{display:flex;align-items:center;gap:12px;min-width:220px}.ha-brand>span{font-size:32px;color:#d5eef5;text-shadow:0 0 16px #a0d7ef}.ha-brand a{color:#f0f4f3!important;font:700 15px Georgia,serif;letter-spacing:.15em;text-decoration:none}.ha-brand small{display:block;color:#9eb1b9;font-size:9px;letter-spacing:.18em;margin-top:3px}
+body #user-tools{margin-left:auto;float:none;color:#c2d1d6;font-size:10px;letter-spacing:.04em}
+body #user-tools a,body #logout-form button{color:#d9e6e9!important}
+.ha-admin-nav{display:flex;gap:24px;align-items:center;flex:1 0 100%;padding:8px 0 0;border-top:1px solid #334851}
+.ha-admin-nav a{color:#c7d8dd!important;font-size:12px;font-weight:600;text-decoration:none}.ha-admin-nav a:hover{color:#fff!important}
+body .main{background:transparent}body .main>.content{padding:32px clamp(20px,4vw,64px) 100px;min-width:0}
+body #content{max-width:1450px;margin:auto;width:100%;box-sizing:border-box}body #content-main{float:none;width:100%}
+body.dashboard #content{width:100%;max-width:1450px}
+body.dashboard #content-main{display:block;width:100%;margin:0}
+body .titles h1,body #content h1,body #content h2{color:#e8f0f2}
+body a:link,body a:visited{color:#b7d8e6}body a:hover{color:#fff}
+body div.breadcrumbs,body ol.breadcrumbs{background:#142b3a;color:#d7e5e9;border-bottom:1px solid #344d5a}
+body .module,body #content-related .module,body .inline-group,body .submit-row{background:rgba(17,28,39,.94);border:1px solid #354955;box-shadow:none;color:#e0e9ed}
+body .module h2,body .module caption,body .inline-group h2,body .dashboard #content-main .module caption{background:#213b4b;color:#edf6f7}
+body .module th,body .module td,body #result_list tbody tr,body .form-row{border-color:#344550;color:#dce8eb}
+body #result_list tbody tr:nth-child(odd),body .dashboard #content-main .module tr:nth-child(even){background:#14232f}
+body #result_list tbody tr:nth-child(even){background:#101c26}
+body input,body textarea,body select{background:#0b151e;color:#edf5f7;border:1px solid #587080;border-radius:3px}
+body .form-row input[type=text],body .form-row input[type=password],body .form-row input[type=email],body .form-row textarea{width:min(100%,32rem);max-width:100%;min-height:42px;box-sizing:border-box;padding:10px 12px}
+body input:focus,body textarea:focus,body select:focus{outline:2px solid #aad7e7;outline-offset:1px}
+body .help,body .helptext,body p.help,body .quiet{color:#b3c3c9!important}
+body .errornote,body .errorlist{background:#4a232b;color:#ffe1df;border-color:#d6898c}
+body .button,body input[type=submit],body .submit-row input,body button[type=submit]{border:1px solid #99b7c2;border-radius:3px;background:#385b6e;color:#fff;transition:background .18s,border-color .18s}
+body .button:hover,body input[type=submit]:hover,body .submit-row input:hover,body button[type=submit]:hover{background:#567b8d;color:#fff}
+body .submit-row input.default,body input[type=submit].default{background:#a64650;border-color:#d58d92}
+body input:disabled,body button:disabled{opacity:.55;cursor:not-allowed}
+body .results{overflow-x:auto}body #result_list{width:100%}body #changelist-filter{background:#132431;color:#e1edf1}
+body #changelist-filter a,body #changelist-filter h3{color:#cbdde2}
+body #nav-sidebar .current-model,body #nav-sidebar .current-app .current-model{background:#294454!important}
+body #nav-sidebar .current-model a,body #nav-sidebar .current-model th{color:#f2fbfd!important}
+body.login{background:radial-gradient(ellipse at 50% 25%,#203949,#08121c 60%,#070c13)!important}
+body.login #container{max-width:490px;width:calc(100% - 36px);margin:8vh auto;background:rgba(12,24,33,.95);border:1px solid #526d79;box-shadow:0 25px 80px #0009}
+body.login #header{justify-content:center;padding:26px;border-bottom:1px solid #536b76}
+body.login #content{padding:26px 34px 34px}
+body.login #content:before{content:"Bienvenido al panel";display:block;margin:0 0 8px;color:#e7f3f5;font:26px Georgia,serif}
+body.login #content:after{content:"Acceso seguro al registro de visitas";display:block;margin:18px 0 0;color:#b2c6cc;font-size:12px}
+body.login .form-row input{width:100%;box-sizing:border-box;min-height:46px}
+body.login .submit-row{background:transparent;border:0;padding:14px 0 0}
+body.login .submit-row input{width:100%;min-height:46px;background:#a64650;border-color:#d58d92}
+.ha-dashboard{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:36px}
+.ha-admin-hero{position:relative;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:235px;overflow:hidden;padding:clamp(28px,4vw,54px);border:1px solid #415d6a;background:radial-gradient(circle at 80% 50%,#34546666,transparent 35%),linear-gradient(120deg,#0d1b25,#162d3a 65%,#1f202a);box-shadow:0 20px 45px #0004}
+.ha-admin-hero:before{content:"";position:absolute;inset:9px;border:1px solid #b7d5dd20;pointer-events:none}.ha-kicker{font-size:10px!important;letter-spacing:.2em;font-weight:700;color:#e4a0a4!important;text-transform:uppercase}
+.ha-admin-hero h1{font:400 clamp(30px,3.4vw,52px)/1.14 Georgia,serif!important;color:#f1f5f2!important;margin:14px 0!important}.ha-admin-hero h1 em{font-style:normal;color:#b8d7e0}.ha-admin-hero p:last-child{max-width:520px;color:#c2d0d4;line-height:1.7}
+.ha-admin-hero__mark{text-align:center;min-width:180px;color:#c9e5ed}.ha-admin-hero__mark span{display:block;font:100px/1 Georgia,serif;text-shadow:0 0 25px #92c7dc}.ha-admin-hero__mark small{font-size:9px;letter-spacing:.27em;line-height:1.8}
+.ha-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:14px}.ha-stat{padding:22px;border:1px solid #39515f;background:rgba(17,31,42,.92);min-height:105px}.ha-stat span,.ha-stat small{display:block;color:#b6cad1;font-size:10px;letter-spacing:.13em}.ha-stat strong{display:block;margin:10px 0;color:#e8f5f7;font:36px/1 Georgia,serif}.ha-stat small{letter-spacing:0;font-size:11px}
+.ha-admin-section{min-width:0}.ha-heading{display:flex;justify-content:space-between;align-items:end;gap:20px;border-bottom:1px solid #3b525e;padding-bottom:16px;margin-bottom:18px}.ha-heading h2{font:26px Georgia,serif!important;margin:8px 0 0!important}.ha-heading>span{font-size:10px;color:#9bb0b9;letter-spacing:.13em}.ha-heading>a{white-space:nowrap}
+.ha-modules{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:18px}.ha-module{border:1px solid #39515f;background:rgba(16,29,39,.94)}.ha-module__heading{padding:22px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(120deg,#1d3746,#222a35)}.ha-module__heading h3{font:21px Georgia,serif;margin:8px 0 0}.ha-module__heading a{color:#edf4f5!important}.ha-module__heading>span{font:38px Georgia,serif;color:#a7ceda}.ha-module__row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px;border-top:1px solid #354954}.ha-actions{display:flex;gap:8px;align-items:center}.ha-actions a{font-size:11px;text-decoration:none}.ha-actions .ha-add{padding:7px 10px;border:1px solid #7c9aa7;color:#dcecf0}
+.ha-table-wrap{overflow-x:auto;border:1px solid #39515f;background:#101d27}.ha-table-wrap table{width:100%;border-collapse:collapse;min-width:600px}.ha-table-wrap th,.ha-table-wrap td{text-align:left;padding:15px 18px;border-bottom:1px solid #344b57;color:#dce8eb}.ha-table-wrap th{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#b0c4cb;background:#1c303c}.ha-status{color:#a8dfc8}.ha-status--done{color:#bdcbd1}.ha-empty{text-align:center;padding:30px!important;color:#b6c7cd!important}
+.admin-app-page__hero span,.admin-app-page__intro p,.admin-app-page__card-content p{color:#c2d2d7!important}.admin-app-page__actions a{color:#f5f8f8!important}.admin-app-page__actions a.secondary{background:#293f4b!important;color:#e4eff1!important}
+@media(max-width:760px){body #header{padding:18px 20px;flex-wrap:nowrap}body #user-tools{margin-left:0}.ha-admin-nav{flex:0 0 auto;width:100%;box-sizing:border-box;gap:16px;overflow-x:auto}.ha-admin-nav a{white-space:nowrap}.ha-admin-hero__mark{display:none}.ha-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.ha-heading>span{display:none}.ha-module__row{flex-wrap:wrap}body.login #content{padding:22px}}
+@media(max-width:420px){.ha-stats{grid-template-columns:1fr 1fr}.ha-stat{padding:15px}.ha-stat strong{font-size:28px}}

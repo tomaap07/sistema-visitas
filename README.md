@@ -11,3 +11,9 @@ El esquema `caso1_visitas` debe estar migrado antes de usar el sistema. Las tabl
 Las pruebas locales se ejecutan con `python manage.py test --settings=core.test_settings`. Esta configuración crea el esquema de prueba directamente: la historia de migraciones original contiene SQL específico de PostgreSQL y no se ejecuta en SQLite.
 
 Si la base de datos no responde, se muestra una página de reintento con estado HTTP 503. La página no sustituye la base de datos ni permite registrar visitas sin conexión; tras un error al guardar se debe comprobar el listado antes de volver a enviar.
+
+## Ambiente, sonido y recursos
+
+El escenario visual está implementado en `static/css/ambiente-v2.css` y `static/js/escenario.js`. El reproductor global y los sonidos sintéticos de interfaz y lluvia están en `static/js/reproductor.js`. Las preferencias de volumen, silencio, lluvia y efectos se guardan en el navegador; la pista y posición aproximada se conservan durante la sesión. Las recargas completas pueden interrumpir el audio y el navegador puede exigir interacción para reanudarlo.
+
+La segunda pista y los sprites auténticos requieren archivos y autorización. El inventario, las fuentes, sus limitaciones y los pasos de integración están en [docs/ASSET_MANIFEST.md](docs/ASSET_MANIFEST.md). El cursor usa el comportamiento nativo hasta que haya un archivo original autorizado. El resumen administrativo usa agregaciones sujetas a los permisos de Django y no necesita cambios de esquema.
