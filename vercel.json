@@ -1,3 +1,0 @@
-{
-  "buildCommand": "python manage.py migrate caso1_visitas --noinput"
-}
