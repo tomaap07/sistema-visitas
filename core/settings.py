@@ -43,6 +43,9 @@ ALLOWED_HOSTS = [
     '127.0.0.1'
 ]
 
+if os.getenv('VERCEL'):
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 
 # Application definition
 
