@@ -123,7 +123,7 @@ DATABASES = {
 if os.getenv('DATABASE_URL'):
     DATABASES['default'] = dj_database_url.parse(os.environ['DATABASE_URL'], conn_max_age=0)
     if DATABASES['default']['ENGINE'] == 'django.db.backends.postgresql':
-        DATABASES['default']['OPTIONS']['connect_timeout'] = 5
+        DATABASES['default'].setdefault('OPTIONS', {})['connect_timeout'] = 5
 elif not db_host and not os.getenv('VERCEL'):
     DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3'}
 
