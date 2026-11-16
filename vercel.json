@@ -1,0 +1,6 @@
+{
+  "framework": "django",
+  "buildCommand": "python manage.py collectstatic --no-input",
+  "installCommand": "pip install -r requirements.txt",
+  "port": 8000
+}
