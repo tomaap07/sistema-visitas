@@ -1,0 +1,12 @@
+{% extends "rest_framework/base.html" %}
+{% load static %}
+{% block style %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/drf-hallownest.css' %}">
+  <link rel="stylesheet" href="{% static 'css/hallownest.css' %}">
+{% endblock %}
+{% block branding %}<a class="navbar-brand" href="{% url 'api_home' %}">✧ &nbsp; Hallow Agenda · API</a>{% endblock %}
+{% block script %}
+  {{ block.super }}
+  <script defer src="{% static 'js/hallownest.js' %}" data-music="{% static 'sounds/ambiente-hallownest.mp3' %}" data-click="{% static 'sounds/confirmar-hallownest.mp3' %}"></script>
+{% endblock %}

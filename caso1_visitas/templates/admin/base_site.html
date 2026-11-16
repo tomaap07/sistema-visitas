@@ -163,13 +163,6 @@
 {% block nav-global %}{% endblock %}
 
 {% block extrahead %}{{ block.super }}
-<script>
-document.addEventListener('click', function(event) {
-    if (event.target.closest('a, button, input[type="submit"]')) {
-        const sound = new Audio("{% static 'sounds/ui_button_confirm.mp3' %}");
-        sound.volume = .45;
-        sound.play().catch(() => {});
-    }
-});
-</script>
+<link rel="stylesheet" href="{% static 'css/hallownest.css' %}">
+<script defer src="{% static 'js/hallownest.js' %}" data-music="{% static 'sounds/ambiente-hallownest.mp3' %}" data-click="{% static 'sounds/confirmar-hallownest.mp3' %}"></script>
 {% endblock %}

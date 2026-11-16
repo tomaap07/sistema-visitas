@@ -1,8 +1,8 @@
-{% extends 'visita/base.html' %}
+{% extends 'visita/base.html' %}{% load static %}
 {% block content %}
 <section class="hero">
   <div><p class="eyebrow"><span></span> EL LIBRO DE RECEPCIÓN</p><h1>Todo viaje deja<br><em>una huella.</em></h1><p class="intro">Un lugar para registrar cada llegada y mantener el control de quienes cruzan nuestras puertas.</p><a class="button" href="{% url 'visita_create' %}">Registrar una visita <span>↗</span></a></div>
-  <aside class="hero-art" aria-hidden="true"><div class="halo halo-outer"></div><div class="halo halo-inner"></div><div class="needle"></div><div class="crest">✧</div><span>H A L L O W &nbsp; A G E N D A</span></aside>
+  <aside class="hero-art" aria-hidden="true"><div class="halo halo-outer"></div><div class="halo halo-inner"></div><div class="needle"></div><img class="hk-vessel" src="{% static 'images/mascara-viajero.svg' %}" alt=""><span>H A L L O W &nbsp; A G E N D A</span></aside>
 </section>
 <section class="register" aria-labelledby="register-title">
   <div class="section-heading"><div><p class="eyebrow">✦ &nbsp; EL REGISTRO</p><h2 id="register-title">Visitas recientes</h2><p>Un vistazo a los últimos ingresos.</p></div><div class="count"><strong>{{ total_visitas }}</strong><span>VISITAS<br>REGISTRADAS</span></div></div>

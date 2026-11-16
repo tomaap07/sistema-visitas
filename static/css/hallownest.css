@@ -1,0 +1,78 @@
+/* Hallownest atmosphere shared by the public pages and Django administration. */
+@media (pointer:fine) {
+  html, body { cursor: url('../cursors/luz.svg') 4 2, auto; }
+  a, button, input[type="submit"], input[type="button"], select, [role="button"] {
+    cursor: url('../cursors/luz-activa.svg') 4 2, pointer;
+  }
+  input:not([type="submit"]):not([type="button"]), textarea { cursor: text; }
+}
+
+.hk-weather {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: .52;
+}
+.hk-weather::before, .hk-weather::after {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  pointer-events: none;
+  transform: rotate(11deg);
+  background-repeat: repeat;
+  animation: hk-rain 1.65s linear infinite;
+  background-image: repeating-linear-gradient(90deg, transparent 0 61px, rgba(194, 224, 239, .17) 62px, transparent 63px 112px);
+  background-size: 170px 190px;
+  mask-image: repeating-linear-gradient(0deg, transparent 0 35px, #000 36px 82px, transparent 83px 165px);
+}
+.hk-weather::after {
+  opacity: .34;
+  animation-duration: 2.6s;
+  animation-direction: reverse;
+  background-size: 240px 260px;
+  filter: blur(.6px);
+}
+@keyframes hk-rain { from { background-position: 0 0; } to { background-position: 0 190px; } }
+
+body:not(.login) .header { box-shadow: 0 12px 40px rgba(0, 0, 0, .28); }
+.brand-mark, .crest, .ornament { color: #e6f5fa; text-shadow: 0 0 14px rgba(173, 224, 240, .6), 0 0 32px rgba(89, 154, 183, .35); }
+.halo-outer { border-color: rgba(182, 220, 235, .32); box-shadow: 0 0 70px rgba(101, 152, 177, .18), inset 0 0 55px rgba(130, 180, 194, .08); }
+.hk-vessel { position: relative; width: min(180px, 60%); height: auto; filter: drop-shadow(0 0 20px rgba(168, 225, 244, .25)); }
+.panel, .table-wrap { box-shadow: 0 16px 50px rgba(0, 0, 0, .28), 0 0 28px rgba(94, 151, 174, .05); }
+.button { border-color: #c9898d; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), 0 0 20px rgba(160, 62, 75, .16); }
+.button:focus-visible, .hk-audio-toggle:focus-visible, a:focus-visible { outline: 2px solid #d8f5ff; outline-offset: 4px; }
+.hk-audio-toggle { color: #c4d4db; }
+.hk-audio-floating, .footer .hk-audio-floating {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 60;
+  padding: 10px 13px;
+  border: 1px solid #667985;
+  border-radius: 3px;
+  background: rgba(12, 20, 28, .94);
+  color: #e4f2f6;
+  font-size: 11px;
+  letter-spacing: .04em;
+}
+.hk-audio-floating:hover { background: #273645; color: #fff; }
+
+/* Keep the inherited administrative screens readable over the same rain. */
+body #container { background: transparent; }
+body #header { background: rgba(10, 15, 22, .94); border-bottom-color: #8d6872; }
+body #user-tools, body #user-tools a { color: #e3d5d6; }
+body div.breadcrumbs { color: #eadfdf; }
+body .dashboard #content-main .module tr:nth-child(even),
+body .dashboard #content-related .module li:nth-child(even) { background: #252d38; }
+body #content-related .module h2, body #content-related .module h3 { color: #e6c9cb; }
+body a:hover { color: #f1d0d1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hk-weather::before, .hk-weather::after { animation: none; }
+}
+@media (max-width: 600px) {
+  .hk-weather { opacity: .32; }
+  .hk-audio-floating { right: 10px; bottom: 10px; }
+}

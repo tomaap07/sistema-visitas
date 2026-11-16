@@ -11,6 +11,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="stylesheet" href="{% static 'css/api.css' %}">
+  <link rel="stylesheet" href="{% static 'css/hallownest.css' %}">
+  <script defer src="{% static 'js/hallownest.js' %}" data-music="{% static 'sounds/ambiente-hallownest.mp3' %}" data-click="{% static 'sounds/confirmar-hallownest.mp3' %}"></script>
 </head>
 <body>
   <header class="header"><div class="shell header-inner">
@@ -21,23 +23,5 @@
     {% if messages %}{% for message in messages %}<div class="notice" role="status">{{ message }}</div>{% endfor %}{% endif %}
     {% block content %}{% endblock %}
   </main>
-  <footer class="shell footer"><span>✧ &nbsp; HALLOW AGENDA</span><span>Un registro entre reinos</span><button id="audio-toggle" type="button" aria-pressed="false">♫ &nbsp; Música: apagada</button></footer>
-  <audio id="ambient" src="{% static 'sounds/theme.mp3' %}" loop preload="none"></audio>
-  <script>
-  (() => {
-    const audio = document.getElementById('ambient'), button = document.getElementById('audio-toggle');
-    const clickSound = new Audio("{% static 'sounds/ui_button_confirm.mp3' %}");
-    clickSound.volume = .45;
-    document.addEventListener('click', event => {
-      if (event.target.closest('a, button, input[type="submit"]')) {
-        clickSound.currentTime = 0;
-        clickSound.play().catch(() => {});
-      }
-    });
-    button.addEventListener('click', async () => {
-      if (audio.paused) { try { audio.volume = .18; await audio.play(); button.textContent = '♫  Música: encendida'; button.setAttribute('aria-pressed', 'true'); } catch (_) { button.textContent = '♫  Música no disponible'; } }
-      else { audio.pause(); button.textContent = '♫  Música: apagada'; button.setAttribute('aria-pressed', 'false'); }
-    });
-  })();
-  </script>
+  <footer class="shell footer"><span>✧ &nbsp; HALLOW AGENDA</span><span>Un registro entre reinos</span><button class="hk-audio-toggle hk-audio-floating" type="button" aria-pressed="true">♫ &nbsp; Música: activada</button></footer>
 </body></html>

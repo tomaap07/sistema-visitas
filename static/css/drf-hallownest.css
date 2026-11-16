@@ -1,0 +1,8 @@
+body{background:radial-gradient(ellipse at 70% 0,#282431 0,#101923 45%,#090d13 100%);color:#dbe3e6}
+.navbar-inverse{background:rgba(10,15,22,.95);border-color:#62414d}
+.navbar-inverse .navbar-brand,.navbar-inverse .navbar-nav>li>a{color:#e6d8d8}
+.breadcrumb,.well,.tabbable .tab-content,.request-info,.response-info{background-color:#151e28;color:#d5dfe3;border-color:#3d4a55}
+pre,code,.prettyprint{background-color:#101720!important;color:#d6e4e8!important;border-color:#384853!important}
+.form-control{background:#101720;color:#e6ecee;border-color:#52606a}
+a{color:#e2a9ae}a:hover{color:#f4d1d4}
+.btn-primary{background:#a9414a;border-color:#c9898d}.btn-primary:hover{background:#bd5059;border-color:#dba4a6}

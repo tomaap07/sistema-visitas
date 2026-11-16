@@ -71,3 +71,12 @@ class ConexionBaseDeDatosTests(TestCase):
         for url in ['/admin/', '/admin/caso1_visitas/', '/api/', '/api/auth/', '/api/token/', '/api/token/refresh/']:
             with self.subTest(url=url):
                 self.assertEqual(self.client.get(url, HTTP_ACCEPT='text/html').status_code, 200)
+
+    def test_ambience_is_available_on_public_admin_and_browsable_api(self):
+        urls = ['/visitas/', '/admin/login/', '/api/visitas/']
+        for url in urls:
+            with self.subTest(url=url):
+                response = self.client.get(url, HTTP_ACCEPT='text/html')
+                self.assertIn(response.status_code, (200, 401))
+                self.assertContains(response, 'js/hallownest.js', status_code=response.status_code)
+                self.assertContains(response, 'ambiente-hallownest.mp3', status_code=response.status_code)
