@@ -128,6 +128,7 @@
     if (event.defaultPrevented) { playConfirmation(); return; }
     if (navigating) { event.preventDefault(); return; }
     event.preventDefault();
+    event.stopImmediatePropagation();
     navigating = true;
     const submitter = event.submitter;
     playConfirmation().then(() => {
@@ -136,5 +137,5 @@
       if (submitter && submitter.isConnected) form.requestSubmit(submitter);
       else form.requestSubmit();
     });
-  });
+  }, true);
 })();
