@@ -4,6 +4,7 @@ from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
 from django.db import OperationalError
+from django.contrib.auth import get_user_model
 from unittest.mock import patch
 
 from .models import Persona, Visita
@@ -63,3 +64,10 @@ class ConexionBaseDeDatosTests(TestCase):
         self.assertRedirects(response, reverse('visita_list'))
         visita = Visita.objects.get()
         self.assertContains(self.client.get(reverse('visita_detail', args=[visita.pk])), 'Reunion')
+
+    def test_admin_and_api_pages_render(self):
+        admin = get_user_model().objects.create_superuser(username='adminprueba', password='prueba')
+        self.client.force_login(admin)
+        for url in ['/admin/', '/admin/caso1_visitas/', '/api/', '/api/auth/', '/api/token/', '/api/token/refresh/']:
+            with self.subTest(url=url):
+                self.assertEqual(self.client.get(url, HTTP_ACCEPT='text/html').status_code, 200)

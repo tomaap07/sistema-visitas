@@ -16,11 +16,11 @@
         position: relative;
         overflow: hidden;
         padding: 32px;
-        border-left: 6px solid #ea580c;
+        border-left: 6px solid #a9414a;
         border-radius: 12px;
-        background: linear-gradient(120deg, #1c1917 0%, #431407 100%);
-        color: #fff7ed;
-        box-shadow: 10px 10px 0 rgba(251, 146, 60, .14);
+        background: linear-gradient(120deg, #0d121a 0%, #28222d 100%);
+        color: #eee7e5;
+        box-shadow: 10px 10px 0 rgba(169, 65, 74, .14);
     }
 
     .admin-dashboard__hero::after {
@@ -29,7 +29,7 @@
         bottom: -70px;
         width: 170px;
         height: 170px;
-        border: 20px solid rgba(251, 146, 60, .2);
+        border: 20px solid rgba(169, 65, 74, .2);
         border-radius: 999px;
         content: "";
     }
@@ -38,7 +38,7 @@
         position: relative;
         z-index: 1;
         margin: 0;
-        color: #fdba74;
+        color: #d79da1;
         font-size: 11px;
         font-weight: 800;
         letter-spacing: .18em;
@@ -50,7 +50,7 @@
         z-index: 1;
         max-width: 720px;
         margin: 8px 0 10px;
-        color: #fff7ed;
+        color: #eee7e5;
         font-size: clamp(28px, 4vw, 44px);
         font-weight: 800;
         line-height: 1.08;
@@ -61,7 +61,7 @@
         z-index: 1;
         max-width: 650px;
         margin: 0;
-        color: #fed7aa;
+        color: #42353c;
         font-size: 15px;
     }
 
@@ -74,15 +74,15 @@
     .admin-dashboard__stat {
         min-height: 112px;
         padding: 18px;
-        border: 1px solid #fed7aa;
+        border: 1px solid #42353c;
         border-radius: 10px;
-        background: #fff;
+        background: #191e27;
         box-shadow: 5px 5px 0 rgba(251, 146, 60, .12);
     }
 
     .admin-dashboard__stat strong {
         display: block;
-        color: #7c2d12;
+        color: #3a242c;
         font-size: 30px;
         line-height: 1;
     }
@@ -98,7 +98,7 @@
 
     .admin-dashboard__section-title {
         margin: 0 0 12px;
-        color: #292524;
+        color: #e5dedc;
         font-size: 20px;
         font-weight: 800;
     }
@@ -111,26 +111,26 @@
 
     .admin-dashboard__module {
         overflow: hidden;
-        border: 1px solid #fed7aa;
+        border: 1px solid #42353c;
         border-radius: 10px;
-        background: #fff;
-        box-shadow: 6px 6px 0 rgba(251, 146, 60, .13);
+        background: #191e27;
+        box-shadow: 6px 6px 0 rgba(169, 65, 74, .13);
     }
 
     .admin-dashboard__module header {
         padding: 17px 20px;
-        background: #7c2d12;
+        background: #3a242c;
     }
 
     .admin-dashboard__module header h2 {
         margin: 0;
-        color: #fff7ed;
+        color: #eee7e5;
         font-size: 18px;
     }
 
     .admin-dashboard__module header p {
         margin: 5px 0 0;
-        color: #fed7aa;
+        color: #42353c;
         font-size: 12px;
     }
 
@@ -140,7 +140,7 @@
         justify-content: space-between;
         gap: 16px;
         padding: 16px 20px;
-        border-top: 1px solid #ffedd5;
+        border-top: 1px solid #25232b;
     }
 
     .admin-dashboard__model a {
@@ -157,7 +157,7 @@
         display: inline-block;
         padding: 7px 10px;
         border-radius: 7px;
-        background: #fff7ed;
+        background: #eee7e5;
         font-size: 12px;
         font-weight: 700;
     }
@@ -170,15 +170,15 @@
 
     .admin-dashboard__panel {
         padding: 20px;
-        border: 1px solid #fed7aa;
+        border: 1px solid #42353c;
         border-radius: 10px;
-        background: #fff;
+        background: #191e27;
         box-shadow: 6px 6px 0 rgba(251, 146, 60, .1);
     }
 
     .admin-dashboard__panel h2 {
         margin: 0 0 12px;
-        color: #7c2d12;
+        color: #3a242c;
         font-size: 17px;
     }
 
@@ -190,7 +190,7 @@
 
     .admin-dashboard__panel li {
         padding: 10px 0;
-        border-bottom: 1px solid #ffedd5;
+        border-bottom: 1px solid #25232b;
         font-size: 13px;
     }
 
@@ -250,7 +250,7 @@
             {% for app in app_list %}
             <article class="admin-dashboard__module">
                 <header>
-                    <h2><a href="{{ app.app_url }}" style="color:#fff7ed">{{ app.name }}</a></h2>
+                    <h2><a href="{{ app.app_url }}" style="color:#eee7e5">{{ app.name }}</a></h2>
                     <p>Gestiona la información de {{ app.name|lower }}.</p>
                 </header>
                 {% for model in app.models %}
