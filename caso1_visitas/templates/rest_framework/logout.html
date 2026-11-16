@@ -1,0 +1,13 @@
+{% extends "visita/base.html" %}
+
+{% block title %}Sesión cerrada | Recepción{% endblock %}
+
+{% block content %}
+<section class="mx-auto max-w-md">
+    <div class="border border-orange-100 bg-white/90 p-7 text-center shadow-[10px_10px_0_rgba(251,146,60,0.13)] sm:p-10">
+        <h1 class="text-3xl font-black text-stone-950">Sesión cerrada</h1>
+        <p class="mt-3 text-stone-600">Tu sesión de la API se cerró correctamente.</p>
+        <a href="{% url 'api_auth' %}" class="mt-7 inline-flex rounded-xl bg-orange-700 px-5 py-3 text-sm font-semibold text-white hover:bg-orange-800">Volver a autenticación</a>
+    </div>
+</section>
+{% endblock %}

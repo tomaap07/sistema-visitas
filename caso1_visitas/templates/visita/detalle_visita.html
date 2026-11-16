@@ -1,0 +1,7 @@
+{% extends 'visita/base.html' %}
+{% block title %}Ficha de visita · Hallow Agenda{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'visita_list' %}">← Volver al registro</a>
+<section class="detail-layout"><div class="detail-heading"><p class="eyebrow">✦ &nbsp; FICHA DE VISITA</p><h1>{{ object.persona.nombre }}<br><em>{{ object.persona.apellido }}</em></h1><p class="intro">RUT {{ object.rut }}</p>{% if object.esta_dentro %}<span class="badge">● Dentro</span>{% else %}<span class="badge muted">Salida registrada</span>{% endif %}<div class="ornament">✧</div></div>
+<div class="panel"><p class="eyebrow">DETALLES DEL INGRESO</p><h2>Ficha de acceso</h2><div class="detail-grid"><div><small>Nombre</small><strong>{{ object.persona.nombre }}</strong></div><div><small>Apellido</small><strong>{{ object.persona.apellido }}</strong></div><div><small>RUT</small><strong>{{ object.rut }}</strong></div><div><small>Fecha solicitada</small><strong>{{ object.fecha|date:"d/m/Y" }}</strong></div><div><small>Entrada</small><strong>{{ object.hora_entrada|date:"d/m/Y H:i" }}</strong></div><div><small>Salida</small><strong>{% if object.hora_salida %}{{ object.hora_salida|date:"d/m/Y H:i" }}{% else %}Pendiente{% endif %}</strong></div></div><div class="reason"><small>Motivo de la visita</small><p>{{ object.motivo_visita|default:"No se informó un motivo." }}</p></div><p class="protected">✧ &nbsp; Registro protegido · La administración gestiona los cambios</p></div></section>
+{% endblock %}

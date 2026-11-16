@@ -1,0 +1,35 @@
+{% extends "visita/base.html" %}
+
+{% block title %}API | Recepción{% endblock %}
+
+{% block content %}
+<section class="mx-auto max-w-5xl" aria-labelledby="api-title">
+    <div class="border-l-4 border-orange-600 pl-5">
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-orange-700">Centro de integración</p>
+        <h1 id="api-title" class="mt-3 text-4xl font-black leading-tight text-stone-950 sm:text-6xl">API de recepción<span class="text-orange-600">.</span></h1>
+        <p class="mt-4 max-w-2xl leading-7 text-stone-600">Accede a la autenticación, los tokens y los recursos de visitas sin cambiar las rutas de la API.</p>
+    </div>
+    <div class="mt-10 grid gap-5 md:grid-cols-2">
+        <a href="{% url 'api_auth' %}" class="group border border-orange-100 bg-white/90 p-6 shadow-[8px_8px_0_rgba(251,146,60,0.13)] transition hover:-translate-y-0.5 hover:border-orange-300">
+            <p class="font-mono text-sm font-bold text-orange-700">/api/auth/</p>
+            <h2 class="mt-3 text-2xl font-black text-stone-950">Autenticación</h2>
+            <p class="mt-2 leading-6 text-stone-600">Inicia o cierra la sesión web de Django REST Framework.</p>
+        </a>
+        <a href="{% url 'token_obtain_pair' %}" class="group border border-orange-100 bg-white/90 p-6 shadow-[8px_8px_0_rgba(251,146,60,0.13)] transition hover:-translate-y-0.5 hover:border-orange-300">
+            <p class="font-mono text-sm font-bold text-orange-700">/api/token/</p>
+            <h2 class="mt-3 text-2xl font-black text-stone-950">Obtener token</h2>
+            <p class="mt-2 leading-6 text-stone-600">Genera un par de tokens JWT con tus credenciales.</p>
+        </a>
+        <a href="{% url 'token_refresh' %}" class="group border border-orange-100 bg-white/90 p-6 shadow-[8px_8px_0_rgba(251,146,60,0.13)] transition hover:-translate-y-0.5 hover:border-orange-300">
+            <p class="font-mono text-sm font-bold text-orange-700">/api/token/refresh/</p>
+            <h2 class="mt-3 text-2xl font-black text-stone-950">Actualizar token</h2>
+            <p class="mt-2 leading-6 text-stone-600">Renueva el access token usando un refresh token vigente.</p>
+        </a>
+        <div class="border border-orange-100 bg-stone-950 p-6 text-orange-50 shadow-[8px_8px_0_rgba(251,146,60,0.13)]">
+            <p class="font-mono text-sm font-bold text-orange-300">/api/</p>
+            <h2 class="mt-3 text-2xl font-black">Recursos</h2>
+            <div class="mt-3 space-y-1 font-mono text-sm text-stone-300"><p>/api/visitas/</p><p>/api/personas/</p></div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'visita/base.html' %}
+{% block title %}Nueva visita · Hallow Agenda{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'visita_list' %}">← Volver al registro</a>
+<div class="form-layout"><div class="form-intro"><p class="eyebrow">✦ &nbsp; NUEVO INGRESO</p><h1>Una nueva<br><em>historia.</em></h1><p class="intro">Registra los datos de la visita para añadir una nueva página al libro.</p><div class="ornament">✧</div></div>
+<section class="panel" aria-labelledby="form-title"><p class="eyebrow">REGISTRO DE VISITA</p><h2 id="form-title">Datos de ingreso</h2><p class="panel-copy">Completa los campos para registrar la visita.</p>
+<form method="post">{% csrf_token %}
+{% if form.non_field_errors %}<div class="form-error" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+<div class="fields">{% for field in form %}<div class="field"><label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} <span>*</span>{% endif %}</label>{{ field }}{% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}{% if field.errors %}<div class="form-error" role="alert">{{ field.errors|striptags }}</div>{% endif %}</div>{% endfor %}</div>
+<div class="form-actions"><a class="back-link" href="{% url 'visita_list' %}">Cancelar</a><button class="button" type="submit">Guardar visita <span>↗</span></button></div></form></section></div>
+{% endblock %}

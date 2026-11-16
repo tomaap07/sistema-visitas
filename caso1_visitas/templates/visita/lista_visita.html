@@ -1,0 +1,16 @@
+{% extends 'visita/base.html' %}
+{% block content %}
+<section class="hero">
+  <div><p class="eyebrow"><span></span> EL LIBRO DE RECEPCIÓN</p><h1>Todo viaje deja<br><em>una huella.</em></h1><p class="intro">Un lugar para registrar cada llegada y mantener el control de quienes cruzan nuestras puertas.</p><a class="button" href="{% url 'visita_create' %}">Registrar una visita <span>↗</span></a></div>
+  <aside class="hero-art" aria-hidden="true"><div class="halo halo-outer"></div><div class="halo halo-inner"></div><div class="needle"></div><div class="crest">✧</div><span>H A L L O W &nbsp; A G E N D A</span></aside>
+</section>
+<section class="register" aria-labelledby="register-title">
+  <div class="section-heading"><div><p class="eyebrow">✦ &nbsp; EL REGISTRO</p><h2 id="register-title">Visitas recientes</h2><p>Un vistazo a los últimos ingresos.</p></div><div class="count"><strong>{{ total_visitas }}</strong><span>VISITAS<br>REGISTRADAS</span></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Visitante</th><th>RUT</th><th>Motivo</th><th>Entrada</th><th>Estado</th><th><span class="sr-only">Detalle</span></th></tr></thead><tbody>
+  {% for visita in object_list %}
+    <tr><td><strong>{{ visita.persona.nombre }} {{ visita.persona.apellido }}</strong></td><td>{{ visita.rut }}</td><td>{{ visita.motivo_visita }}</td><td>{{ visita.hora_entrada|date:"d/m/Y H:i" }}</td><td>{% if visita.esta_dentro %}<span class="badge">● Dentro</span>{% else %}<span class="badge muted">Salida registrada</span>{% endif %}</td><td><a class="detail-link" href="{% url 'visita_detail' visita.pk %}">Ver ficha ↗</a></td></tr>
+  {% empty %}<tr><td colspan="6" class="empty"><span>✧</span><strong>El libro está esperando su primera historia.</strong><p>Aún no hay visitas registradas.</p><a href="{% url 'visita_create' %}">Registrar una visita →</a></td></tr>{% endfor %}
+  </tbody></table></div>
+  {% if page_obj.has_other_pages %}<nav class="pagination" aria-label="Paginación"><span>Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span><div>{% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">← Anterior</a>{% endif %}{% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">Siguiente →</a>{% endif %}</div></nav>{% endif %}
+</section>
+{% endblock %}

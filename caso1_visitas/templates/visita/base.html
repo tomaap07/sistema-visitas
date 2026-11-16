@@ -1,0 +1,34 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1017">
+  <title>{% block title %}Hallow Agenda · Registro de visitas{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <header class="header"><div class="shell header-inner">
+    <a class="brand" href="{% url 'visita_list' %}" aria-label="Hallow Agenda, inicio"><span class="brand-mark">✧</span><span><span class="brand-name">Hallow Agenda</span><small>LIBRO DE VISITAS</small></span></a>
+    <nav aria-label="Navegación principal"><a href="{% url 'visita_list' %}">El registro</a><a href="/admin/">Administración</a><a class="button button-small" href="{% url 'visita_create' %}">Registrar visita <span>↗</span></a></nav>
+  </div></header>
+  <main class="shell main">
+    {% if messages %}{% for message in messages %}<div class="notice" role="status">{{ message }}</div>{% endfor %}{% endif %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="shell footer"><span>✧ &nbsp; HALLOW AGENDA</span><span>Un registro entre reinos</span><button id="audio-toggle" type="button" aria-pressed="false">♫ &nbsp; Música: apagada</button></footer>
+  <audio id="ambient" src="{% static 'sounds/theme.mp3' %}" loop preload="none"></audio>
+  <script>
+  (() => {
+    const audio = document.getElementById('ambient'), button = document.getElementById('audio-toggle');
+    button.addEventListener('click', async () => {
+      if (audio.paused) { try { audio.volume = .18; await audio.play(); button.textContent = '♫  Música: encendida'; button.setAttribute('aria-pressed', 'true'); } catch (_) { button.textContent = '♫  Música no disponible'; } }
+      else { audio.pause(); button.textContent = '♫  Música: apagada'; button.setAttribute('aria-pressed', 'false'); }
+    });
+  })();
+  </script>
+</body></html>
