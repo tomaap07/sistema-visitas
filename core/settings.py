@@ -123,7 +123,7 @@ DATABASES = {
 
 # Use the existing Vercel DATABASE_URL, retaining the original variables for
 # the companion project. SQLite is only a local development default.
-database_url = os.getenv('BASE_COMPANERO_DATABASE_URL') or os.getenv('DATABASE_URL')
+database_url = os.getenv('DATABASE_URL')
 if database_url:
     DATABASES['default'] = dj_database_url.parse(database_url, conn_max_age=0)
     if DATABASES['default']['ENGINE'] == 'django.db.backends.postgresql':

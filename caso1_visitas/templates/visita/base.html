@@ -25,6 +25,14 @@
   <script>
   (() => {
     const audio = document.getElementById('ambient'), button = document.getElementById('audio-toggle');
+    const clickSound = new Audio("{% static 'sounds/ui_button_confirm.mp3' %}");
+    clickSound.volume = .45;
+    document.addEventListener('click', event => {
+      if (event.target.closest('a, button, input[type="submit"]')) {
+        clickSound.currentTime = 0;
+        clickSound.play().catch(() => {});
+      }
+    });
     button.addEventListener('click', async () => {
       if (audio.paused) { try { audio.volume = .18; await audio.play(); button.textContent = '♫  Música: encendida'; button.setAttribute('aria-pressed', 'true'); } catch (_) { button.textContent = '♫  Música no disponible'; } }
       else { audio.pause(); button.textContent = '♫  Música: apagada'; button.setAttribute('aria-pressed', 'false'); }
