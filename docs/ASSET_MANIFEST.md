@@ -16,4 +16,8 @@ Los sprites y el arte pertenecen a sus titulares. Los repositorios comunitarios 
 
 La lluvia se genera con CSS: ahora se desplaza la capa de gotas, en dos velocidades, en vez de desplazar un fondo vertical visualmente idéntico. Las animaciones decorativas se detienen con `prefers-reduced-motion`, efectos reducidos o pestaña oculta. La música puede requerir un primer gesto por la política de reproducción del navegador. Su posición aproximada se conserva entre recargas; las navegaciones completas interrumpen brevemente el ambiente.
 
-La segunda pista de Silksong sigue sin archivo incorporado. El reproductor repite la pista disponible; no se descargó una grabación alternativa.
+La segunda pista es `Needoline` de Silksong, Christopher Larkin, tomada del archivo `assets/audio/needoline.mp3` del repositorio de Hornet indicado arriba. Se sirve como `audio/needoline.mp3` a 128 kbit/s, duración aproximada 302,55 s. El reproductor permite cambiar de pista y avanza al terminar.
+
+Criaturas originales: [Vengefly](https://hollowknight.wiki/w/File:Vengefly_Idle.png) y [Crawlid](https://hollowknight.wiki/w/File:B_Crawlid.png), Team Cherry. Son sprites individuales con desplazamiento y oscilación procedurales; no se presentan como ciclos de fotogramas del juego. Aparecen aleatoriamente, con máximo de dos en pantalla, no capturan clics y se retiran al cruzar. Se detienen al ocultar la pestaña o reducir movimiento.
+
+El favicon muestra la cabeza del Caballero mediante una ventana SVG sobre el PNG promocional original, sin redibujar el personaje. El cliente independiente incluye una copia local de los recursos necesarios bajo `ambient/`.

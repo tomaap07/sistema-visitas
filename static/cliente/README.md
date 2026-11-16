@@ -30,5 +30,7 @@ También se publica integrado en https://sistema-visitas-kohl.vercel.app/cliente
 
 Bootstrap 5.3.8 (CSS, licencia MIT) se sirve localmente. Se utilizan tablas responsivas, indicadores de carga, diálogos nativos accesibles, estados vacíos, mensajes de validación y soporte de movimiento reducido. No requiere Node ni compilación.
 
+`ambient/` contiene escenario original de Silksong, lluvia animada, criaturas decorativas, cursor y favicon del Caballero. El reproductor ofrece música de Hollow Knight y Needoline de Silksong, volumen y controles de efectos. Los recursos se alojan localmente y el usuario confirmó su autorización; las atribuciones completas están en `docs/ASSET_MANIFEST.md` del backend. La música puede requerir la primera interacción del usuario por las políticas del navegador.
+
 Backend: https://github.com/tomaap07/sistema-visitas
 Documentación de endpoints y validación: `docs/ES03_ENTREGA.md` en el backend.

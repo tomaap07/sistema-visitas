@@ -2,12 +2,14 @@
 {% load static %}
 {% block style %}
   {{ block.super }}
-  <link rel="stylesheet" href="{% static 'css/drf-hallownest.css' %}">
-  <link rel="stylesheet" href="{% static 'css/ambiente-v2.css' %}">
+  <link rel="icon" type="image/svg+xml" href="{% static 'recursos-hollow/favicon.svg' %}">
+<link rel="stylesheet" href="{% static 'css/drf-hallownest.css' %}">
+  <link rel="stylesheet" href="{% static 'css/ambiente-v2.css' %}?v=20261116">
 {% endblock %}
 {% block branding %}<a class="navbar-brand" href="{% url 'api_home' %}">✧ &nbsp; Hallow Agenda · API</a>{% endblock %}
 {% block script %}
   {{ block.super }}
-  <script defer src="{% static 'js/escenario.js' %}"></script><script defer src="{% static 'js/companeros.js' %}" data-assets="{% static 'recursos-hollow/personajes/' %}"></script>
-  <script defer src="{% static 'js/reproductor.js' %}" data-click="{% static 'recursos-hollow/audio/confirmar.mp3' %}" data-music="{% static 'sounds/ambiente-hallownest.mp3' %}"></script>
+  <script defer src="{% static 'js/escenario.js' %}?v=20261116"></script><script defer src="{% static 'js/companeros.js' %}?v=20261116" data-assets="{% static 'recursos-hollow/personajes/' %}"></script>
+<script defer src="{% static 'js/criaturas.js' %}?v=20261116" data-assets="{% static 'recursos-hollow/personajes/' %}"></script>
+  <script defer src="{% static 'js/reproductor.js' %}?v=20261116" data-pharloom="{% static 'recursos-hollow/audio/needoline.mp3' %}" data-click="{% static 'recursos-hollow/audio/confirmar.mp3' %}" data-music="{% static 'sounds/ambiente-hallownest.mp3' %}"></script>
 {% endblock %}

@@ -1,4 +1,4 @@
-/* Shapes and light are code-drawn atmosphere, not game sprites. */
+/* Real game scenery and sprites with lightweight decorative CSS layers. */
 body{isolation:isolate}
 body::before{display:none!important}
 .ha-atmosphere{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;contain:strict;background:radial-gradient(ellipse at 73% 15%,#45303c55,transparent 42%),radial-gradient(ellipse at 18% 40%,#1b3444bb,transparent 46%),linear-gradient(#11121a,#0a131c 65%,#080e14)}
@@ -61,3 +61,13 @@ html[data-effects="reduced"] .ha-game-bg,html[data-effects="reduced"] .ha-knight
 @media(prefers-reduced-motion:reduce){.ha-knight-hero{animation:none}}
 @media(max-width:700px){.ha-admin-knight{width:75px;opacity:.32}.ha-hornet{width:170px;height:205px}}
 @media(prefers-reduced-motion:reduce){.ha-game-bg{transform:none}}
+.ha-creatures{position:fixed;inset:0;z-index:6;pointer-events:none;overflow:hidden;contain:strict}
+.ha-creature{position:absolute;left:0;width:75px;pointer-events:none;will-change:transform;opacity:.83;filter:drop-shadow(0 5px 9px #0008)}
+.ha-creature img{display:block;width:100%;height:auto;transform:scaleX(var(--direction,1))}
+.ha-creature--flying img{animation:ha-flight .85s ease-in-out infinite alternate}
+.ha-creature--walking{bottom:4px;width:60px}.ha-creature--walking img{animation:ha-scuttle .32s ease-in-out infinite alternate}
+@keyframes ha-flight{to{translate:0 -15px;rotate:4deg}}
+@keyframes ha-scuttle{to{translate:0 -3px;rotate:-3deg}}
+@media(max-width:600px){.ha-creature{width:48px;opacity:.65}.ha-creature--walking{width:42px}}
+html[data-effects="reduced"] .ha-creatures{display:none}
+@media(prefers-reduced-motion:reduce){.ha-creatures{display:none}}

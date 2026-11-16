@@ -6,13 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1017">
   <title>{% block title %}Hallow Agenda · Registro de visitas{% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="icon" type="image/svg+xml" href="{% static 'recursos-hollow/favicon.svg' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="stylesheet" href="{% static 'css/api.css' %}">
-  <link rel="stylesheet" href="{% static 'css/ambiente-v2.css' %}">
+  <link rel="stylesheet" href="{% static 'css/ambiente-v2.css' %}?v=20261116">
   <link rel="stylesheet" href="{% static 'css/visitas-v2.css' %}">
-  <script defer src="{% static 'js/escenario.js' %}"></script><script defer src="{% static 'js/companeros.js' %}" data-assets="{% static 'recursos-hollow/personajes/' %}"></script>
-  <script defer src="{% static 'js/hornet.js' %}"></script>
-  <script defer src="{% static 'js/reproductor.js' %}" data-click="{% static 'recursos-hollow/audio/confirmar.mp3' %}" data-music="{% static 'sounds/ambiente-hallownest.mp3' %}"></script>
+  <script defer src="{% static 'js/escenario.js' %}?v=20261116"></script><script defer src="{% static 'js/companeros.js' %}?v=20261116" data-assets="{% static 'recursos-hollow/personajes/' %}"></script>
+<script defer src="{% static 'js/criaturas.js' %}?v=20261116" data-assets="{% static 'recursos-hollow/personajes/' %}"></script>
+  <script defer src="{% static 'js/hornet.js' %}?v=20261116"></script>
+  <script defer src="{% static 'js/reproductor.js' %}?v=20261116" data-pharloom="{% static 'recursos-hollow/audio/needoline.mp3' %}" data-click="{% static 'recursos-hollow/audio/confirmar.mp3' %}" data-music="{% static 'sounds/ambiente-hallownest.mp3' %}"></script>
 </head>
 <body>
   <a class="ha-skip" href="#contenido">Saltar al contenido</a>

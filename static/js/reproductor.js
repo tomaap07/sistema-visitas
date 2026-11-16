@@ -4,12 +4,12 @@
   if (!source) return;
   const get = (store, key, fallback = null) => { try { return store.getItem(key) ?? fallback; } catch (_) { return fallback; } };
   const set = (store, key, value) => { try { store.setItem(key, String(value)); } catch (_) {} };
-  // Add an authorised local file to data-pharloom on each template to enable track two.
   const tracks = [
-    {id:'hallownest', title:'Enter Hallownest', src:source.dataset.music},
-    {id:'pharloom', title:'Enter Pharloom', src:source.dataset.pharloom || null},
+    {id:'hallownest', title:'Hollow Knight · tema de inicio', src:source.dataset.music},
+    {id:'pharloom', title:'Needoline · Silksong', src:source.dataset.pharloom || null},
   ];
   const available = tracks.filter(track => track.src);
+  if (!available.length) return;
   let index = Math.max(0, available.findIndex(track => track.id === get(sessionStorage, 'ha_track')));
   let wantsPlay = get(localStorage, 'ha_play', get(localStorage, 'hallow_music_enabled', 'true')) !== 'false';
   let muted = get(localStorage, 'ha_muted', 'false') === 'true';
@@ -45,7 +45,7 @@
           <label for="ha-click-audio">Sonido de interfaz</label><input id="ha-click-audio" type="checkbox">
         </div>
       </details>
-      <p class="ha-player__pending" data-pending>Enter Pharloom · archivo autorizado pendiente</p>
+      <p class="ha-player__pending" data-pending>Segunda pista no disponible</p>
     </div>
     <button class="ha-player__toggle" type="button" aria-expanded="false" aria-controls="ha-player-panel"><span aria-hidden="true">♫</span><span data-mini>Música del viaje</span><span aria-hidden="true">⌃</span></button>`;
   document.body.append(panel);
